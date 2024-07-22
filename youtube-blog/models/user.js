@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose');
-const { type } = require('os');
+
 
 const userSchema = new Schema({
 
