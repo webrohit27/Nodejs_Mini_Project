@@ -1,16 +1,15 @@
-const { Router } = require("express");
+const express = require("express");
+const { Router } = express;
 const User = require('../models/user');
 
 const router = Router();
 
 router.get("/signin", (req, res) => {
-    return 
-    res.render("signin");
+    return res.render("signin");
 });
 
 router.get("/signup", (req, res) => {
-    return 
-    res.render("signup")
+    return res.render("signup");
 });
 
 router.post('/signup', async(req, res) => {
@@ -22,3 +21,5 @@ router.post('/signup', async(req, res) => {
     return 
     res.redirect("/");
 })
+
+module.exports = router;

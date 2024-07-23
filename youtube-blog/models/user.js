@@ -15,7 +15,7 @@ const userSchema = new Schema({
     },
     salt:{
         type: String,
-        required:true
+       
     },
     password:{
         type: String,
@@ -31,9 +31,9 @@ const userSchema = new Schema({
         type: String,
         enum:["USER", "ADMIN"],
         default: "USER",
-    }
-} 
-   {timestamps: true}
+    },
+},
+{timestamps: true}
 );
 
 userSchema.pre('save', function (next) {
