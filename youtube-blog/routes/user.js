@@ -13,13 +13,20 @@ router.get("/signup", (req, res) => {
 });
 
 router.post('/signup', async(req, res) => {
-    await User.create({
-        fullName,
-        email,
-        password,
-    });
-    return 
-    res.redirect("/");
-})
+    const { fullName, email, password } = req.body; // Extract values from req.body
+
+    try {
+        await User.create({
+            fullName,
+            email,
+            password,
+        });
+        res.redirect("/");
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).send('Error creating user');
+    }
+});
+
 
 module.exports = router;
