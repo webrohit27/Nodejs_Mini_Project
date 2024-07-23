@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const User = require('../models/user');
 
 const router = Router();
 
@@ -9,7 +10,7 @@ router.get("/signin", (req, res) => {
 
 router.get("/signup", (req, res) => {
     return 
-    res.render("signup");
+    res.render("signup")
 });
 
 router.post('/signup', async(req, res) => {
