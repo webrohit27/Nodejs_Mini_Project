@@ -1,5 +1,6 @@
 const { createHmac, randomBytes } = require("crypto")
 const { Schema, model } = require('mongoose');
+const { createTokenForUser } = require("../services/authentication")
 
 
 const userSchema = new Schema({
@@ -22,7 +23,7 @@ const userSchema = new Schema({
         required:true,
     },
 
-    progileImageUrl:{
+    profileImageURL:{
     type: String,
     default:'/images/hacker.png',
     },
@@ -55,12 +56,13 @@ userSchema.pre('save', function (next) {
 });
 
 // Find Email and Match password
-userSchema.static("matchPassword", async function(req, res){
+userSchema.static("matchPasswordAndGenerateToken", 
+    async function(email, password){
     const user = await this.findOne({ email });
 
-    console.log(user);
 
     if(!user) throw new Error('User Not Found!');
+
     const salt = user.salt;
     const hashedPassword = user.password;
 
@@ -72,7 +74,8 @@ userSchema.static("matchPassword", async function(req, res){
     if(hashedPassword !== userProvideHash)
         throw new Error('Incorrect Password');
 
-    return user; 
+    const token = createTokenForUser(user);
+    return token;
 })
 
 const User = model('user', userSchema);
